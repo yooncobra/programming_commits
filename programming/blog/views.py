@@ -21,4 +21,11 @@ def post_detail(request, pk):
 '''
 
 
+class PostDetailView(DetailVeiw):
+    def get_object(self, queryset=None):
+        # self.kwargs : year, month, day, pk
+        # self.kwargs['year']
+        return Post.objects.get(pk=self.kwargs['pk'])
+
+# post_detail = DetailView.as_view(model=Post)
 post_detail = DetailView.as_view()
