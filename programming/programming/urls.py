@@ -25,5 +25,6 @@ urlpatterns = [
     url(r'^posts/new/$', 'blog.views.post_new'),
     url(r'^posts/(?P<pk>\d+)/edit/$', 'blog.views.post_edit'),
     url(r'^posts/(?P<pk>\d+)/comments/new/$', 'blog.views.comment_new'),
+    url(r'^posts/(?P<pk>\d+)/comments/(?P<pk>\d+)/edit/$', 'blog.views.comment_edit'),
 ]
 
