@@ -6,7 +6,7 @@ from django.utils import timezone
 def random_name_upload_to(instance, filename):
     app_label = instance.__class__.meta.app_label
     cls_name = instance.__class__.__name__.lower()
-    ymd_path = timezone.now().strtime('%Y/%m/%d')
+    ymd_path = timezone.now().strftime('%Y/%m/%d')
     name = uuid4().hex
     name[:2]
     name[2:]

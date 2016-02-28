@@ -17,9 +17,17 @@
                         <td>
                             {{ post.id }}
                         </td>
+                        <td>
+                            <a href="/posts/{{ posts.id }}/">
+                                {{ post.title }}
+                            </a>
+                        </td>
                     </tr>
                 {% endfor %}
-            </body>
-        </table>
+                </body>
+            </table>
+        </div>
     </div>
 </div>
+
+{% endblock %}

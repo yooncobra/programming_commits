@@ -1,10 +1,10 @@
 from django.contrib import messages
-from django.shortcuts import get_object_or_404, redirect, render
 # from django.http import Http404
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import DetailView
 from blog.models import Post, Comment
 from blog.forms import PostForm, CommentForm
- 
+
 
 def index(request):
     return render(request, 'blog/index.html')
@@ -37,19 +37,19 @@ class PostDetailView(DetailView):
         return get_object_or_404(Post, pk=self.kwargs['pk'])
 
 # post_detail = DetailView.as_view(model=Post)
-post_detail = DetailView.as_view()
+post_detail = PostDetailView.as_view()
 
 
 def post_new(request):
     if request.method == 'POST':
-        form = PostForm(request.POST, request.FIELS)
+        form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save()
             return redirect('blog.views.post_detail', post.pk)
     else:
             form = PostForm()
-    return render('blog/post_form.html', {
-                'form': form,
+    return render(request, 'blog/post_form.html', {
+        'form': form,
     })
 
 
@@ -58,7 +58,7 @@ def post_edit(request, pk):
     post = get_object_or_404(Post, pk=pk)
 
     if request.method == 'POST':
-        form = PostForm(request.POST, request.FIELS, instance=post)
+        form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             post = form.save()
             return redirect('blog.views.post_detail', post.pk)
@@ -69,21 +69,21 @@ def post_edit(request, pk):
     })
 
 
-    def comment_new(request, post_pk):
-        if request.method == 'POST':
-            form = CommentForm(request.POST)
-            if form.is_valid():
-                comment = form.save(commit=False)
-                # comment.post = Post.objects.get(pk=post_pk)
-                comment.post = get_object_or_404(Post, pk=post_pk)
-                comment.save()
-                messages.info(request, '새로운 댓글을 등록했습니다.')
-                return redirect('blog.views.post_detail', post_pk)
-        else:
-            form = CommentForm()
-        return render(request, 'blog/comment_form.html', {
-            'form': form,
-       })
+def comment_new(request, post_pk):
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            # comment.post = Post.objects.get(pk=post_pk)
+            comment.post = get_object_or_404(Post, pk=post_pk)
+            comment.save()
+            messages.info(request, '새로운 댓글을 등록했습니다.')
+            return redirect('blog.views.post_detail', post_pk)
+    else:
+        form = CommentForm()
+    return render(request, 'blog/comment_form.html', {
+        'form': form,
+   })
 
 
 def comment_edit(request, post_pk, pk):
@@ -98,4 +98,5 @@ def comment_edit(request, post_pk, pk):
     else:
         form = CommentForm(instance=comment)
     return render(request, 'blog/comment_form.html', {
+        'form': form,
         })
