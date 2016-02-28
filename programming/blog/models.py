@@ -2,7 +2,7 @@ from django import forms
 from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
-
+from programming.utils import random_name_upload_to
 
 def min_length_validator(value):
     if len(value) < 3:
@@ -24,7 +24,7 @@ class Post(models.Model):   # 이 클래스는 모든 모델의 기본 클래스
             validators=[min_length_validator],
             help_text='포스팅 제목을 100자 이내로 써주세요.')
     content = models.TextField()
-    photo = models.ImageField(blank=True)
+    photo = models.ImageField(blank=True, upload_to=random_name_upload_to)
     phone = PhoneField(blank=True)
     tags = models.ManyToManyField('Tag', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
