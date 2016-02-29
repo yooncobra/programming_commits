@@ -20,7 +20,7 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^accounts/', include('accounts.ulrs')),
+    url(r'^accounts/', include('accounts.urls')),
     url(r'^$', 'blog.views.index'),
     url(r'^posts/$', 'blog.views.post_list'),
     url(r'^posts/(?P<pk>\d+)$', 'blog.views.post_detail'),
