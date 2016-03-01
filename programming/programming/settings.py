@@ -150,3 +150,5 @@ try:
 except ImportError:
     pass
 
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER    #send_mail 시에 from_user를 미 지정하면, 본 주소가 사용됩니다.
+
