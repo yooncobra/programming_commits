@@ -1,1 +1,4 @@
 -r commom.txt
+
+psycopg2
+uwsgi
