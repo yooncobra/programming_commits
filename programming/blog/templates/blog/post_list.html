@@ -18,8 +18,8 @@
                             {{ post.id }}
                         </td>
                         <td>
-                            <a href="/posts/{{ posts.id }}/">
-                                {{ post.title }}
+                            <a href="{% url "blog:post_detail" post.pk %}">
+                                 {{ post.title }}
                             </a>
                         </td>
                     </tr>
