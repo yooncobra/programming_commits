@@ -1,8 +1,10 @@
 from django import forms
+from django.conf import settings
 from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from programming.utils import random_name_upload_to
+
 
 def min_length_validator(value):
     if len(value) < 3:
@@ -20,6 +22,7 @@ class PhoneField(models.CharField):
 
 @python_2_unicode_compatible
 class Post(models.Model):   # 이 클래스는 모든 모델의 기본 클래스인 models.Model을 상속 받습니다.
+    author = models.ForeignKey(settings.AUTH_USER_MODEL)
     title = models.CharField(max_length=100, 
             validators=[min_length_validator],
             help_text='포스팅 제목을 100자 이내로 써주세요.')
@@ -37,6 +40,7 @@ class Post(models.Model):   # 이 클래스는 모든 모델의 기본 클래스
 @python_2_unicode_compatible
 class Comment(models.Model):
     post = models.ForeignKey(Post)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL)
     message = models.TextField()
 
     def __str__(self):
