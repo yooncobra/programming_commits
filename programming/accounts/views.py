@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model, get_backends, autheticate, login as auth_login
+from django.contrib.auth.decoretors import login_required
 from django.contrib.auth.tokens import default_token_generator as token_generator
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.encoding import force_text
@@ -14,6 +15,7 @@ def signup(request):
         form = SignupForm2(request.POST)
         if form.is_valid():
             user = form.save()
+
             # backend_cls = get_backends()[0].__class__
             # backend_path = backend_cls.__module__ + '.' + backend_cls.__name__
             # https://github.com/django/django/blob/1,9/django/contrib/auth/__init__.py#L81
@@ -29,6 +31,7 @@ def signup(request):
             return redirect(settings.LOGIN_REDIRECT_URL)
 
             # 회원가입 시에 이메일 승인
+            # user = form.save(commit=False) 
             # user.is_active = False
             # user.save()
             # send_signup_confirm_email(request, user)
@@ -59,7 +62,7 @@ def signup_confirm(request, uidb64, token):
         messages.error(request, '잘못된 경로로 접근하셨습니다.')
         return redirect(settings.LOGINS_URL)
 
-
+@login_required
 def profile(request):
     return render(request, 'accounts/profile.html')
 
