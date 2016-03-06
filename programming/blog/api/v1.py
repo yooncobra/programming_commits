@@ -5,7 +5,7 @@ from blog.models import Post
 
 def post_list(request):
     post_list = [post.title for post in Post.objects.all()]
-    return JsonRespose(post_list, safe=False)
+    return JsonResponse(post_list, safe=False)
 
 
 urlpatterns = [
